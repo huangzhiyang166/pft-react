@@ -8,14 +8,19 @@ import {
     getMemberInfo,
 } from "./store";
 
+import{ updatePageLoading} from "../page-loading/store";
+
 const mapStateToProps = (state) => {
     return state
 };
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-    login,
-    getMemberInfo,
-},dispatch)
+const mapDispatchToProps = (dispatch) => ({
+    actions : bindActionCreators({
+        login,
+        getMemberInfo,
+        updatePageLoading
+    },dispatch)
+})
 
 
 class Home extends React.Component{
@@ -23,14 +28,20 @@ class Home extends React.Component{
         super();
     }
     componentDidMount(){
-        this.props.login({account:"123624",pwd:"mmcs123"}).then(()=>{
-            setTimeout(()=>{
-                this.props.getMemberInfo();
-            },1000)
-        })
+        
+        const {actions} = this.props;
+        setTimeout(()=>{
+            console.log("home componentDidMount..")
+            actions.updatePageLoading(false)
+            actions.login({account:"123624",pwd:"mmcs123"}).then(()=>{
+                setTimeout(()=>{
+                    actions.getMemberInfo();
+                },1000)
+            })
+        },3000)
+        
     }
     render(){
-        console.log(this.props);
         return(
             <div>
                 home
