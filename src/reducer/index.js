@@ -1,12 +1,12 @@
 import {combineReducers} from "redux";
 import {routerReducer} from "react-router-redux";
+import app from "./app";
+import home from "@/page/home/store";
 
-import home from "../page/home/store";
-import pageLoading from "../components/page-loading/store";
 
 
 export default combineReducers({
     routing : routerReducer,
     home,
-    pageLoading
+    app
 })

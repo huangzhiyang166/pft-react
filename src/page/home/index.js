@@ -1,26 +1,14 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import axios from "@/util/axios";
 import {
-    login,
-    getMemberInfo,
-} from "./store";
+    login as Login,
+} from "@/action";
 
-import{ updatePageLoading} from "../page-loading/store";
 
 const mapStateToProps = (state) => {
     return state
 };
 
-const mapDispatchToProps = (dispatch) => ({
-    actions : bindActionCreators({
-        login,
-        getMemberInfo,
-        updatePageLoading
-    },dispatch)
-})
 
 
 class Home extends React.Component{
@@ -29,16 +17,11 @@ class Home extends React.Component{
     }
     componentDidMount(){
         
-        const {actions} = this.props;
-        setTimeout(()=>{
-            console.log("home componentDidMount..")
-            actions.updatePageLoading(false)
-            actions.login({account:"123624",pwd:"mmcs123"}).then(()=>{
-                setTimeout(()=>{
-                    actions.getMemberInfo();
-                },1000)
-            })
-        },3000)
+        
+        console.log("home componentDidMount..")
+        this.props.dispatch(Login({account:"123624",pwd:"mmcs123",yzm:"SSZ6"})).then((res)=>{
+            
+        })
         
     }
     render(){
@@ -54,4 +37,4 @@ class Home extends React.Component{
 
 
 
-export default connect(mapStateToProps,mapDispatchToProps)(Home);
+export default connect(mapStateToProps)(Home);

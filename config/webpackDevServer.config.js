@@ -11,6 +11,8 @@ const host = process.env.HOST || '0.0.0.0';
 
 module.exports = function(proxy, allowedHost) {
 
+  
+
 
   proxy.onProxyRes = function(proxyRes,req,res){
     console.log("proxyRes");
