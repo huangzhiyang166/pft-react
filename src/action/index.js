@@ -2,7 +2,7 @@
  * @Author: huangzhiyang 
  * @Date: 2018-07-20 16:08:43 
  * @Last Modified by: huangzhiyang
- * @Last Modified time: 2018-07-20 17:15:14
+ * @Last Modified time: 2018-07-23 17:28:45
  * 
  * 全局action
  * 
@@ -18,7 +18,7 @@ import {
 
 
 
-export const login = ({username,pwd}) => (dispatch,state) => {
+export const login = ({username,pwd}) => (dispatch,getState) => {
     dispatch({type:LOGIN_LOADING});
     return Login({account:username,pwd}).then((res)=>{
         if(res.code==200){
@@ -35,4 +35,9 @@ export const login = ({username,pwd}) => (dispatch,state) => {
         dispatch({type:LOGIN_FAIL,payload:error});
         return error;
     })
+}
+
+
+export const authCheck = ({token}) => (dispatch,getState) => {
+
 }

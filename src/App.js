@@ -7,6 +7,8 @@ import { ConnectedRouter } from 'react-router-redux'
 import store,{history} from "./store";
 import {authorizedRoutes} from "./routes";
 import AuthorizedLayout from "./layout/authorizedLayout";
+import UnFound from "./layout/404";
+import AuthRoute from "@/hoc/authRoute";
 export default class App extends React.Component{
     render(){
 		return(
@@ -14,27 +16,8 @@ export default class App extends React.Component{
 				<ConnectedRouter history={history}>
 					<Router>
 						<Switch>
-							{authorizedRoutes.map((route) => {
-								const {path,component : RouteComponent} = route;
-								const routeConfig = {}
-								Object.keys(route).forEach((key) => {
-									if(key!="component") routeConfig[key] = route[key];
-								})
-								return(
-									<Route 
-										key={path}
-										{...routeConfig}
-										render = {(props) => {
-											const config = {...routeConfig,...props}
-											return (
-												<AuthorizedLayout {...config}>
-													<RouteComponent {...config}/>
-												</AuthorizedLayout>
-											)
-										}}
-									/>
-								)
-							})}
+							{authorizedRoutes.map((route) => <AuthRoute key={route.path} {...route}/>)}
+							{<Route render={(props) => <UnFound {...props}/>}/>}
 						</Switch>
 					</Router>
 				</ConnectedRouter>

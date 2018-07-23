@@ -1,17 +1,18 @@
 import React,{Component} from "react";
 import {connect} from "react-redux";
 
-class AuthorizedLayout extends Component{
+
+class UnFound extends Component{
     constructor(props){
         super(props)
     }
     render(){
         return(
-            <div className="authorizedLayoutContainer">
-                {this.props.children}
+            <div className="UnFoundContainer">
+                404 not found!
             </div>
         )
     }
 }
 
-export default connect()(AuthorizedLayout);
+export default connect()(UnFound);

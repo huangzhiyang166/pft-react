@@ -19,22 +19,6 @@ module.exports = function(proxy, allowedHost) {
     console.log(proxyRes);
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   return {
     // WebpackDevServer 2.4.3 introduced a security fix that prevents remote
     // websites from potentially accessing local content through DNS rebinding:
@@ -99,11 +83,14 @@ module.exports = function(proxy, allowedHost) {
     https: protocol === 'https',
     host: host,
     overlay: false,
-    historyApiFallback: {
-      // Paths with dots should still use the history fallback.
-      // See https://github.com/facebookincubator/create-react-app/issues/387.
-      disableDotRule: true,
-    },
+    historyApiFallback : true,
+    // historyApiFallback: {
+    //   // Paths with dots should still use the history fallback.
+    //   // See https://github.com/facebookincubator/create-react-app/issues/387.
+    //   // disableDotRule: false,
+    //   // index:'index.html',
+    // },
+    // historyApiFallback: true,
     public: allowedHost,
     proxy,
     before(app) {

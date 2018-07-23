@@ -11,13 +11,13 @@ const mapStateToProps = (state) => {
 
 
 
-class Home extends React.Component{
+class UnAuthoried extends React.Component{
     constructor(){
         super();
     }
     componentDidMount(){
         
-        console.log("home componentDidMount..",this.props);
+        console.log("UnAuthoried componentDidMount..")
         // this.props.dispatch(Login({account:"123624",pwd:"mmcs123",yzm:"SSZ6"})).then((res)=>{
             
         // })
@@ -26,7 +26,7 @@ class Home extends React.Component{
     render(){
         return(
             <div>
-                home
+                UnAuthoried
             </div>
         )
     }
@@ -36,4 +36,4 @@ class Home extends React.Component{
 
 
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps)(UnAuthoried);
