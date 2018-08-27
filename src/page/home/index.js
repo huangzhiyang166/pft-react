@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from "react-redux";
 import {
     login as Login,
+    getMemberInfo as GetMemberInfo
 } from "@/action";
 
 
@@ -16,11 +17,12 @@ class Home extends React.Component{
         super();
     }
     componentDidMount(){
-        
-        console.log("home componentDidMount..",this.props);
-        // this.props.dispatch(Login({account:"123624",pwd:"mmcs123",yzm:"SSZ6"})).then((res)=>{
-            
-        // })
+        const dispatch = this.props.dispatch;
+        dispatch(Login({account:"123624",pwd:"mmcs123"})).then((res)=>{
+            dispatch(GetMemberInfo()).then((res) => {
+                console.log("GetMemberInfo",res);
+            })
+        })
         
     }
     render(){

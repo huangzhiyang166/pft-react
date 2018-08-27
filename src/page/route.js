@@ -6,6 +6,10 @@ const SelfApplyProdList = Loadable({loader: () => import('./self-apply-prodlist'
 
 
 export default[{
+    path : "",
+    exact : true,
+    redirect : "/home"
+},{
     path: '/home',
     component: Home
 },{

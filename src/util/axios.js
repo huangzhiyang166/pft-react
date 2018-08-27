@@ -1,5 +1,9 @@
-import axios from "axios";
+import Axios from "axios";
 import qs from "qs";
+const axios = Axios.create({
+    timeout : 10 * 1000,
+    withCredentials : true
+})
 const httpRequestError = (status,statusText) => {
     console.error(`请求出错 status: ${status} statusText: ${statusText}`);
 }
@@ -7,7 +11,7 @@ const httpRequestError = (status,statusText) => {
 //添加request拦截器
 axios.interceptors.request.use((config)=>{
     let params = config.data || {};
-    config.data = qs.stringify(params)
+    config.data = qs.stringify(params);
     return config;
 })
 //添加response拦截器
