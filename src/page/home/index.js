@@ -28,7 +28,7 @@ class Home extends React.Component{
     render(){
         return(
             <div>
-                home
+                home!!!!!2222222222222
             </div>
         )
     }
