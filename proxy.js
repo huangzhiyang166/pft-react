@@ -1,7 +1,7 @@
 let cookie = "";
 module.exports = {
     "/dlogin.php": {
-        "target": "http://my.12301.test",
+        "target": "http://my.12301.local",
         "secure": false,
         "changeOrigin": true,
         // cookieDomainRewrite : {
@@ -9,7 +9,7 @@ module.exports = {
         // }
         onProxyRes: function (proxyRes, req, res) {
             var cookies = proxyRes.headers['set-cookie'];
-            var cookieRegex = /domain=\.12301\.test/i;
+            var cookieRegex = /domain=\.12301\.local/i;
             if (cookies) {
                 var newCookie = cookies.map(function (cookie) {
                     if (cookieRegex.test(cookie)) {
@@ -30,16 +30,16 @@ module.exports = {
             if(cookie){
                 proxyReq.setHeader('Cookie', cookie);
             }
-            proxyReq.setHeader('Referer', "http://my.12301.test");
+            proxyReq.setHeader('Referer', "http://my.12301.local");
         }
     },
     "/r/*": {
-        "target": "http://my.12301.test",
+        "target": "http://my.12301.local",
         "secure": false,
         "changeOrigin": true,
         onProxyRes: function (proxyRes, req, res) {
             var cookies = proxyRes.headers['set-cookie'];
-            var cookieRegex = /domain=\.12301\.test/i;
+            var cookieRegex = /domain=\.12301\.local/i;
             if (cookies) {
                 var newCookie = cookies.map(function (cookie) {
                     if (cookieRegex.test(cookie)) {
