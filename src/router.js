@@ -2,10 +2,14 @@ import React,{Component} from "react";
 import history from "@/history";
 import { HashRouter as Router, Route, Switch, Redirect  } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
+import { AnimatedSwitch } from 'react-router-transition';
 import BasicLayout from "@/layout/basicLayout";
 import LoginLayout from "@/layout/loginLayout";
+import NotFound from "@/layout/notFound";
 import AuthLayout from "@/layout/authLayout";
 import {authRoute} from "./routes";
+
+
 
 const omitRouteRenderProperties = (obj) => {
     const OMIT_ROUTE_RENDER_PROPERTIES = ['render', 'component'];
@@ -58,9 +62,14 @@ class AppRouter extends Component{
             <ConnectedRouter history={history}>
                 <BasicLayout>
                     <Router>
-                        <Switch>
-                            {authRoute.map((route) => (this.renderAuthRoute(route)))}
-                        </Switch>
+                        <AnimatedSwitch
+                            atEnter={{ opacity: 0 }}
+                            atLeave={{ opacity: 0 }}
+                            atActive={{ opacity: 1}}
+                            className="switch-wrapper">
+                                {authRoute.map((route) => (this.renderAuthRoute(route)))}
+                                <Route component={NotFound}/>
+                        </AnimatedSwitch>
                     </Router>
                 </BasicLayout>
             </ConnectedRouter>

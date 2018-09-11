@@ -1,15 +1,19 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {
-    login as Login,
-    getMemberInfo as GetMemberInfo
-} from "@/action";
-import history from "@/history";
-
+import {bindActionCreators} from "redux";
+import * as AppActions from "@/action/app";
 
 const mapStateToProps = (state) => {
     return state
 };
+const mapDispatchToProps = (dispatch) => {
+    const actions = {
+        ...AppActions
+    }
+    return{
+        actions : bindActionCreators(actions,dispatch)
+    }
+}
 
 
 class Home extends React.Component{
@@ -17,10 +21,10 @@ class Home extends React.Component{
         super();
     }
     componentDidMount(){
-        
+        console.log(this.props.actions)
+        this.props.actions.pageLoading(true);
     }
     jump(e){
-        console.log(this.props);
         this.props.history.push("self_apply_prodlist")
     }
 
@@ -40,4 +44,4 @@ class Home extends React.Component{
 
 
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps,mapDispatchToProps)(Home);

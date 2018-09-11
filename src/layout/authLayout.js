@@ -5,6 +5,10 @@ class AuthLayout extends Component{
     constructor(props){
         super(props)
     }
+    componentWillUpdate(nextprops){
+        console.log(nextprops.location.pathname);
+        console.log(this.props.location.pathname);
+    }
     checkAuth(){
         return true
     }

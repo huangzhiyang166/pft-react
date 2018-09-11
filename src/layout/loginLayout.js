@@ -10,6 +10,7 @@ class LoginLayout extends Component{
             this.props.history.push("/login");
         }
     }
+    
     checkLogin(){
         return true
     }
