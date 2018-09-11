@@ -5,9 +5,6 @@ import history from "@/history";
 import rootReducer from '../reducer';
 
 
-import { composeWithDevTools } from 'redux-devtools-extension'
-
-
 const initialState = {}
 const enhancers = []
 const middleware = [

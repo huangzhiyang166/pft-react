@@ -1,6 +1,6 @@
 import React,{Component} from "react";
 import history from "@/history";
-import { BrowserRouter as Router, Route, Switch, Redirect  } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch, Redirect  } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 import BasicLayout from "@/layout/basicLayout";
 import LoginLayout from "@/layout/loginLayout";

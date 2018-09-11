@@ -12,6 +12,7 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -35,7 +36,7 @@ if (env.stringified['process.env'].NODE_ENV !== '"production"') {
 }
 
 // Note: defined here because it will be used more than once.
-const cssFilename = 'static/css/[name].[contenthash:8].css';
+const cssFilename = 'static/css/[name].[contenthash:6].css';
 
 // ExtractTextPlugin expects the build output to be flat.
 // (See https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/27)
@@ -57,7 +58,7 @@ module.exports = {
   devtool: shouldUseSourceMap ? 'source-map' : false,
   // In production, we only want to load the polyfills and the app code.
   entry: {
-    app : [require.resolve('./polyfills'), paths.appIndexJs]
+    app : [require.resolve('./polyfills'), paths.appIndexJs],
   },
   output: {
     // The build folder.
@@ -65,8 +66,8 @@ module.exports = {
     // Generated JS file names (with nested folders).
     // There will be one main bundle, and one file per asynchronous chunk.
     // We don't currently advertise code splitting but Webpack supports it.
-    filename: 'static/js/[name].[chunkhash:5].js',
-    chunkFilename: 'static/js/[name].[chunkhash:5].js',
+    filename: 'static/js/[name].[chunkhash:6].js',
+    chunkFilename: 'static/js/[name].[chunkhash:6].js',
     // We inferred the "public path" (such as / or /my-project) from homepage.
     publicPath: publicPath,
     // Point sourcemap entries to original disk location (format as URL on Windows)
@@ -105,6 +106,7 @@ module.exports = {
       // please link the files into your node_modules/ and let module-resolution kick in.
       // Make sure your source files are compiled, as they will not be processed in any way.
       new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
+      
     ],
   },
   module: {
@@ -332,6 +334,29 @@ module.exports = {
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new BundleAnalyzerPlugin({
+      openAnalyzer : false
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      filenames : "static/js/[name].[chunkhash:6].js",
+      minChunks: module => {
+        return module.resource && /node_modules/.test(module.resource)
+      }
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'client',
+      async: 'chunk-vendor',
+      children: true,
+      minChunks: (module, count) => {
+        // 被 2 个及以上 chunk 使用的共用模块提取出来
+        return count >= 2
+      }
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: "runtime",
+      minChunks: Infinity
+    })
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
