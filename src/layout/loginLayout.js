@@ -1,4 +1,6 @@
 import React,{Component} from "react";
+import {connect} from "react-redux";
+import {pageLoading} from "@/action/app";
 
 class LoginLayout extends Component{
     constructor(props){
@@ -9,8 +11,8 @@ class LoginLayout extends Component{
         if(!isLogin){
             this.props.history.push("/login");
         }
+        this.props.dispatch(pageLoading(true));
     }
-    
     checkLogin(){
         return true
     }
@@ -24,6 +26,6 @@ class LoginLayout extends Component{
 }
 
 
-export default LoginLayout
+export default connect()(LoginLayout)
 
 

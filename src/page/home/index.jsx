@@ -21,19 +21,21 @@ class Home extends React.Component{
         super();
     }
     componentDidMount(){
-        console.log(this.props.actions)
-        this.props.actions.pageLoading(true);
+        setTimeout(() => {
+            this.props.actions.pageLoading(false)
+        },3000)
     }
     jump(e){
         this.props.history.push("self_apply_prodlist")
     }
 
     render(){
+        if(this.props.app.pageLoading) return <div>加载中...</div>
         return(
             <div>
                 home!!!!!2222222222222
                 <div>
-                    <a onClick={(e) => this.jump(e)}>跳转</a>
+                    <a onClick={(e) => this.jump(e)}>跳转s</a>
                 </div>
             </div>
         )
