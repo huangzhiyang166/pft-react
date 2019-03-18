@@ -1,39 +1,51 @@
 
-import "nprogress/nprogress.css";
-import NProgress from "nprogress";
-NProgress.configure({ showSpinner: false });
+// import "nprogress/nprogress.css";
+// import NProgress from "nprogress";
+// NProgress.configure({ showSpinner: false });
 
+import {login as Login,getAccountInfo} from "@/service";
 
-export const SWITCH_PAGE_LOADING = "SWITCH_PAGE_LOADING";
+export const actionType = {
+    updateUserInfo : "updateUserInfo"
+};
 
-/**
- * 全局切换页面loading状态
- * @param {Boolean} status  true==正在加载  false==结束加载
- */
-export const pageLoading = (status) => {
-    if(status){
-        NProgress.start();
-    }else{
-        NProgress.done();
-    }
-    return{
-        type : SWITCH_PAGE_LOADING,
-        payload : status
+export const login = ({username,pwd,code}) => {
+    return ({dispatch,getState}) => {
+        return new Promise((resolve,reject) => {
+            Login(username,pwd,code).then((res) => {
+                if(res.code==200){
+                    return getAccountInfo().then((res) => {
+                        if(res.code==200){
+                            dispatch(actionType.updateUserInfo,res.data);
+                            return resolve(res);
+                        }else{
+                            return reject(new Error(res.msg));
+                        }
+                    }).catch((e) => {
+                        return reject(e)
+                    })
+                }else{
+                    return reject(new Error(res.msg));
+                }
+            }).catch((e) => {
+                return reject(e)
+            })
+        })
     }
 }
 
+
 const initState = {
-    accountInfo : {},
-    pageLoading : false
+    userInfo : null
 }
 
 
 const reducer = {
-    [SWITCH_PAGE_LOADING](state,payload){
-        return {
+    [actionType.updateUserInfo](state,userInfo){
+        return{
             ...state,
-            pageLoading : payload
-        };
+            userInfo
+        }
     }
 }
 

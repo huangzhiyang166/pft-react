@@ -15,8 +15,7 @@ module.exports = function(proxy, allowedHost) {
 
 
   proxy.onProxyRes = function(proxyRes,req,res){
-    console.log("proxyRes");
-    console.log(proxyRes);
+    console.log("proxyRes",proxyRes);
   }
 
   return {

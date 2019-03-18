@@ -8,7 +8,6 @@ import rootReducer from '../reducer';
 const initialState = {}
 const enhancers = []
 const middleware = [
-  routerMiddleware(history),
   thunk,
 ]
 
@@ -26,7 +25,7 @@ const composedEnhancers = compose(
 )
 
 const store = createStore(
-  connectRouter(history)(rootReducer),
+  rootReducer,
   initialState,
   composedEnhancers
 )

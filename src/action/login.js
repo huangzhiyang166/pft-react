@@ -1,9 +1,10 @@
+import {login as Login} from "@/service";
 export const REQUEST_LOGIN_START = "REQUEST_LOGIN_START";
 export const REQUEST_LOGIN_SUCCESS = "REQUEST_LOGIN_SUCCESS";
 export const REQUEST_LOGIN_FAIL = "REQUEST_LOGIN_FAIL";
 
-export const login = ({account,pwd,vcode}) => ({dispatch,getState}) => {
-
+export const login = ({account,pwd,vcode=""}) => ({dispatch,getState}) => {
+    return Login({account,pwd,vcode});
 }
 export const loginStart = () => {type : REQUEST_LOGIN_START}
 

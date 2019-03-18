@@ -1,8 +1,9 @@
 import Axios from "axios";
 import qs from "qs";
+Axios.defaults.withCredentials = true;
 const axios = Axios.create({
     timeout : 10 * 1000,
-    withCredentials : true
+    // withCredentials : true
 })
 const httpRequestError = (status,statusText) => {
     console.error(`请求出错 status: ${status} statusText: ${statusText}`);
