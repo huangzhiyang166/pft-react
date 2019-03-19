@@ -9,29 +9,30 @@ export const actionType = {
     updateUserInfo : "updateUserInfo"
 };
 
-export const login = ({username,pwd,code}) => {
-    return ({dispatch,getState}) => {
-        return new Promise((resolve,reject) => {
-            Login(username,pwd,code).then((res) => {
-                if(res.code==200){
-                    return getAccountInfo().then((res) => {
-                        if(res.code==200){
-                            dispatch(actionType.updateUserInfo,res.data);
-                            return resolve(res);
-                        }else{
-                            return reject(new Error(res.msg));
-                        }
-                    }).catch((e) => {
-                        return reject(e)
-                    })
-                }else{
-                    return reject(new Error(res.msg));
-                }
-            }).catch((e) => {
-                return reject(e)
-            })
+export const login = ({username,pwd,code}) => (dispatch,getState) => {
+    return new Promise((resolve,reject) => {
+        Login(username,pwd,code).then((res) => {
+            if(res.code==200){
+                getAccountInfo().then((res) => {
+                    if(res.code==200){
+                        dispatch({
+                            type : actionType.updateUserInfo,
+                            payload : res.data
+                        });
+                        resolve(res);
+                    }else{
+                        reject(new Error(res.msg));
+                    }
+                }).catch((e) => {
+                    reject(e)
+                })
+            }else{
+                reject(new Error(res.msg));
+            }
+        }).catch((e) => {
+            reject(e)
         })
-    }
+    })
 }
 
 
